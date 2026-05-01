@@ -11,16 +11,14 @@
         // -------------------------------------------------------
         const BASE_URL = "http://45.55.136.114:2200";
 
-        // -------------------------------------------------------
-        // Card rank order — used for display reference
-        // For Blackjack you don't compare ranks by position —
-        // you use calculateHandTotal() to get numeric values
-        // -------------------------------------------------------
-        const rankOrder = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
+
+        // Constants
 
         const FACE_VALUE = 10;
         const ACE_VALUE = 11;
         const BUST = 21;
+        const DEALER_DRAW = 16;
+
 
 
         // -------------------------------------------------------
@@ -138,7 +136,6 @@
 
 
         function calculateHandTotal(cards) {
-            // YOUR CODE HERE
             let total = 0;
             let ace = 0
             cards.forEach(function (card) {
@@ -164,25 +161,8 @@
         // -------------------------------------------------------
         // dealInitialCards()
         // Called when player clicks Deal.
-        // Must:
-        //   1. Reset playerCards and dealerCards to []
-        //   2. Draw 4 cards from the server (2 player, 2 dealer)
-        //   3. Assign cards[0], cards[1] to playerCards
-        //   4. Assign cards[2], cards[3] to dealerCards
-        //   5. Add all 4 to gameState.discard
-        //   6. Display player hand (hideFirst = false)
-        //   7. Display dealer hand (hideFirst = true — hide dealer's first card)
-        //   8. Update hand totals on screen
-        //   9. Check for Blackjack (player total = 21 on 2 cards)
-
-        //  10. Enable Hit and Stand buttons, disable Deal button
-        //
-        // HINT: drawCards(4).then(function(cards) { ... })
         // -------------------------------------------------------
         function dealInitialCards() {
-            // YOUR CODE HERE
-            // alert("Deal Cards");
-            //Disable money btns
             if(gameState.currentBet === 0){
                 alert("Please enter a bet more than $0");
                 return;
@@ -236,20 +216,8 @@
         // -------------------------------------------------------
         // playerHit()
         // Called when player clicks Hit.
-        // Must:
-        //   1. Draw 1 card from the server
-        //   2. Add it to gameState.playerCards
-        //   3. Add it to gameState.discard
-        //   4. Display updated player hand
-        //   5. Update player total on screen
-
-        //   6. Check if player busted (total > 21)
-        //      If bust: show bust message, call endHand("dealer")
-        //
-        // HINT: drawCards(1).then(function(cards) { ... })
         // -------------------------------------------------------
         function playerHit() {
-            // YOUR CODE HERE
             drawCards(1).then(function (cards) {
                 gameState.playerCards.push(cards[0]);
                 gameState.discard.push(cards[0]);
@@ -268,14 +236,8 @@
         // -------------------------------------------------------
         // playerStand()
         // Called when player clicks Stand.
-        // Must:
-        //   1. Reveal dealer's hidden card (call displayHand with hideFirst = false)
-        //   2. Run dealer logic — call runDealerLogic()
-        //   3. runDealerLogic returns a Promise — use .then() to
-        //      call determineWinner() after dealer is done
         // -------------------------------------------------------
         function playerStand() {
-            // YOUR CODE HERE
             displayHand(gameState.dealerCards, "dealerHand", false);
             document.getElementById("dealerTotal").textContent = calculateHandTotal(gameState.dealerCards);
 
@@ -290,21 +252,9 @@
         // runDealerLogic()
         // Dealer must hit on 16 or below, stand on 17 or above.
         // This may require multiple draws so it returns a Promise.
-        //
-        // HINT: Use a recursive pattern —
-        //   if dealer total <= 16: drawCards(1).then(function(cards) {
-        //     add card to dealerCards and discard
-        //     display dealer hand
-        //     update dealer total
-
-        //     return runDealerLogic()   <- call itself again
-        //   })
-        //   else: return Promise.resolve()  <- dealer is done, stop
         // -------------------------------------------------------
-        const DEALER_DRAW = 16;
 
         function runDealerLogic() {
-            // YOUR CODE HERE
             let dealerTotal = calculateHandTotal(gameState.dealerCards);
             if (dealerTotal > DEALER_DRAW) {
                 return Promise.resolve("Success");
@@ -326,24 +276,10 @@
         // Called after dealer logic completes.
         // Compare player total vs dealer total.
         // Neither has busted at this point (bust is handled earlier).
-        // Must:
-        //   1. Get player total and dealer total
-
-        //   2. Compare them — higher total wins, 21 is best
-        //   3. Update gameState.playerWins / dealerWins / ties
-        //   4. Increment gameState.handsPlayed
-        //   5. Show result message
-        //   6. Update score display
-
-        //   7. Check if all hands played — call endGame() if so
-        //   8. Otherwise enable Deal button for next hand
-        //
-        // HINT: Dealer wins ties in casino rules — your choice
         // -------------------------------------------------------
         function determineWinner() {
             document.getElementById("btnHit").disabled = true;
             document.getElementById("btnStand").disabled = true;
-            // YOUR CODE HERE
             let pT = calculateHandTotal(gameState.playerCards);
             let dT = calculateHandTotal(gameState.dealerCards);
             let msg = ""
@@ -381,15 +317,11 @@
         // endHand(winner)
         // Called when a hand ends early — bust or blackjack.
         // winner is "player" or "dealer"
-
-        // Must update score, increment handsPlayed, show message,
-        // check if game is over, enable Deal for next hand.
         // -------------------------------------------------------
         function endHand(winner) {
 
             displayHand(gameState.dealerCards, "dealerHand", false);
             document.getElementById("dealerTotal").textContent = calculateHandTotal(gameState.dealerCards);
-            // YOUR CODE HERE
             let msg = "";
             if (winner === "player") {
                 gameState.playerWins += 1;
@@ -426,12 +358,9 @@
         // -------------------------------------------------------
         // endGame()
         // Called when all hands have been played.
-        // Must show the final result — who won overall.
-
         // Disable Hit, Stand, and Deal buttons.
         // -------------------------------------------------------
         function endGame() {
-            // YOUR CODE HERE
             gameState.gameOver = true;
 
             let msg = `player won ${gameState.playerWins}/${gameState.totalHands}.`;
@@ -459,7 +388,6 @@
         // Look at the HTML for element IDs.
         // -------------------------------------------------------
         function updateScore() {
-            // YOUR CODE HERE
             document.getElementById("headerWins").textContent = gameState.playerWins;
             document.getElementById("scoreWins").textContent = gameState.playerWins;
             document.getElementById("headerLosses").textContent = gameState.dealerWins;
@@ -487,8 +415,6 @@
         // -------------------------------------------------------
         // handleReshuffle()
         // Called automatically by drawCards() when reshuffled:true
-        // Must reset gameState.discard to []
-        // Must show a message to the player
         // -------------------------------------------------------
         function handleReshuffle() {
             gameState.discard = [];
@@ -502,8 +428,6 @@
         document.addEventListener("DOMContentLoaded", function () {
 
             while (true) {
-                // Prompt for number of hands
-                // ToDo Prompt for hands set global variable
                 let hands = parseInt(prompt("How many hands would you like to play", "3"));
                 if (isNaN(hands) || hands < 1) {
                     alert("Please enter a number!");
