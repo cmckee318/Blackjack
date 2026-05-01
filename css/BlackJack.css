@@ -1,0 +1,281 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #1a1a2e;
+    color: white;
+    min-height: 100vh;
+}
+
+/* ── Header ── */
+header {
+    background: #2E4057;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+header h1 {
+    font-size: 1.6rem;
+    letter-spacing: 0.1em;
+    width: 400px;
+}
+#headerScore{
+    display: flex;
+    justify-content: right;
+}
+#headerMoney{
+    display: flex;
+    justify-content: center;
+}
+
+#headerScore, #headerMoney{
+    font-size: 1rem;
+    color: #aac;
+    width: 400px;
+    margin-right: 0;
+}
+
+#headerScore, #headerMoney span {
+    color: white;
+    font-weight: bold;
+}
+
+
+
+/* ── Main ── */
+main {
+    margin-top: 4.5rem;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ── Hand sections ── */
+.hand-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.hand-label {
+    font-size: 1rem;
+    color: #aac;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* ── Hand container — cards sit side by side ── */
+.hand-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    min-height: 130px;
+    align-items: center;
+}
+
+.total-label {
+    font-size: 1.1rem;
+    color: #aac;
+}
+
+.total-label span {
+    color: white;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+/* ── Individual card ── */
+.card {
+    width: 80px;
+    height: 115px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border: 2px solid #555;
+    background: white;
+}
+
+.card.red {
+    color: #e94560;
+}
+
+.card.black {
+    color: #1a1a2e;
+}
+
+.card.face-down {
+    background: #2E4057;
+    color: #556;
+    border-color: #445;
+    font-size: 2rem;
+}
+
+/* ── Message ── */
+#message {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #FFD700;
+    min-height: 2rem;
+    text-align: center;
+}
+
+/* ── Button row ── */
+#btn10{
+    padding: 1rem .75rem;
+    margin-right: 20px;
+    border-radius: 50%;
+    color: white;
+    background: cornflowerblue;
+    border-color: blue;
+}
+#btn10:hover{
+    background: #547fc8;
+}
+#btn25{
+    padding: 1rem .75rem;
+    margin-right: 20px;
+    border-radius: 50%;
+    color: white;
+    background: indianred;
+    border-color: red;
+}
+#btn25:hover{
+    background: #9c4646;
+}
+
+#btn50{
+    padding: 1rem .75rem;
+    margin-right: 20px;
+    border-radius: 50%;
+    color: white;
+    background: #333131;
+    border-color: black;
+}
+#btn50:hover{
+    background: #292626;
+}
+
+
+#buttonsContainer{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    /*background: hotpink;*/
+    width: 85%;
+}
+#moneyRow, #placeHolder{
+    display: flex;
+    width: 150px;
+    justify-content: space-between;
+}
+#buttonRow {
+    display: flex;
+    gap: 1rem;
+}
+
+#buttonRow button {
+    padding: 0.65rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+}
+
+#btnDeal {
+    background: #1D9E75;
+    color: white;
+}
+
+#btnDeal:hover:not(:disabled) {
+    background: #158a64;
+}
+
+#btnHit {
+    background: #e94560;
+    color: white;
+}
+
+#btnHit:hover:not(:disabled) {
+    background: #c73652;
+}
+
+#btnStand {
+    background: #2E4057;
+    color: white;
+}
+
+#btnStand:hover:not(:disabled) {
+    background: #1a2a3a;
+}
+
+#buttonRow button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* ── Score table ── */
+#scoreSection {
+    width: 100%;
+    max-width: 700px;
+}
+
+#scoreSection h2 {
+    color: #aac;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+    text-align: center;
+}
+
+#scoreTable {
+    width: 100%;
+    border-collapse: collapse;
+    background: #2E4057;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#scoreTable th {
+    background: #1a2a3a;
+    color: #aac;
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+#scoreTable td {
+    padding: 0.75rem 1rem;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: white;
+    border-top: 1px solid #1a2a3a;
+}
